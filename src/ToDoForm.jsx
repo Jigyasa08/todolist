@@ -13,6 +13,7 @@ function ToDoForm({ addTasks }) {
       id: Date.now(),
       task: newTask,
       completed: false,
+      dueDate: new Date(),
     };
     addTasks(task);
     setNewTask("");

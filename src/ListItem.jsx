@@ -1,6 +1,13 @@
 import { useState } from "react";
+import Datepicker from "./Datepicker";
 
-const ListItem = ({ task, deleteTask, onCompleteTask, onTaskChange }) => {
+const ListItem = ({
+  task,
+  deleteTask,
+  onCompleteTask,
+  onTaskChange,
+  selectedDate,
+}) => {
   const [editMode, setEditMode] = useState(false);
 
   const handleEdit = (event) => {
@@ -24,13 +31,16 @@ const ListItem = ({ task, deleteTask, onCompleteTask, onTaskChange }) => {
         className="checkbox"
         onChange={handleChange}
       />
-      <span>
+      <div>
         {editMode ? (
           <input
             type="text"
             value={task.task}
             onChange={handleEdit}
             onBlur={handleSaveButtonClick}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleSaveButtonClick();
+            }}
             autoFocus
           />
         ) : (
@@ -38,11 +48,15 @@ const ListItem = ({ task, deleteTask, onCompleteTask, onTaskChange }) => {
             {task.task}
           </span>
         )}
-
-        <button className="delete-button" onClick={() => deleteTask(task.id)}>
-          Delete
-        </button>
-      </span>
+        <Datepicker
+          task={task}
+          selectedDate={selectedDate}
+          onDateChange={onTaskChange}
+        />
+      </div>
+      <button className="delete-button" onClick={() => deleteTask(task.id)}>
+        Delete
+      </button>
     </div>
   );
 };
