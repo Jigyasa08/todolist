@@ -58,7 +58,6 @@ const ToDoList = () => {
 
   return (
     <div>
-      <h1>TO-DO LIST</h1>
       <ToDoForm addTasks={addTasks} />
       <div className="toggle-container">
         <h3
