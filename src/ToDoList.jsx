@@ -1,25 +1,39 @@
 import { useMemo, useState } from "react";
+import classNames from "classnames";
 import ToDoForm from "./ToDoForm";
 import List from "./List";
 import storage from "./storage";
+// import UpcomingTasks from "./UpcomingTasks";
+
+const FILTER = {
+  todo: "todo",
+  completed: "completed",
+  upcoming: "upcoming",
+};
 
 const ToDoList = () => {
   const [tasks, setTasks] = useState(() => {
     return storage.getAll();
   });
 
-  const [showCompletedList, setShowCompletedList] = useState(false);
+  const [activeFilter, setFilter] = useState(FILTER.todo);
 
   const addTasks = (newTask) => {
-    const updatedTasks = setTasks([...tasks, newTask]);
+    const updatedTasks = [...tasks, newTask];
+    setTasks(updatedTasks);
     storage.saveList(updatedTasks);
     return updatedTasks;
   };
 
   const filteredTasks = useMemo(
-    () => storage.filterTasks(showCompletedList, tasks),
-    [showCompletedList, tasks]
+    () => storage.filterTasks(activeFilter, tasks),
+    [activeFilter, tasks]
   );
+
+  // const filteredUpcomingTasks = useMemo(
+  //   () => storage.filterUpcomingTasks(tasks),
+  //   [tasks]
+  // );
 
   const onTaskDeleted = (index) => {
     const updatedTasks = tasks.filter((task) => task.id !== index);
@@ -61,25 +75,48 @@ const ToDoList = () => {
       <ToDoForm addTasks={addTasks} />
       <div className="toggle-container">
         <h3
-          className={showCompletedList ? "" : "active"}
-          onClick={() => setShowCompletedList(false)}
+          className={classNames({ active: activeFilter === FILTER.todo })}
+          onClick={() => {
+            setFilter(FILTER.todo);
+          }}
         >
           ToDo
         </h3>
         <div className="divider"></div>
         <h3
-          className={showCompletedList ? "active" : ""}
-          onClick={() => setShowCompletedList(true)}
+          className={classNames({ active: activeFilter === FILTER.completed })}
+          onClick={() => {
+            setFilter(FILTER.completed);
+          }}
         >
           All Completed
         </h3>
+        <div className="divider"></div>
+        <h3
+          className={classNames({ active: activeFilter === FILTER.upcoming })}
+          onClick={() => {
+            setFilter(FILTER.upcoming);
+          }}
+        >
+          Upcoming
+        </h3>
       </div>
-      <List
-        tasks={filteredTasks}
-        deleteTask={onTaskDeleted}
-        completeTask={onTaskCompleted}
-        editTask={onEditTask}
-      />
+      {/* {activeFilter === FILTER.upcoming && (
+        <List
+          tasks={filteredTasks}
+          // deleteTask={onTaskDeleted}
+          // completeTask={onTaskCompleted}
+          // editTask={onEditTask}
+        />
+      )} */}
+      {(activeFilter === FILTER.todo || activeFilter === FILTER.completed) && (
+        <List
+          tasks={filteredTasks}
+          deleteTask={onTaskDeleted}
+          completeTask={onTaskCompleted}
+          editTask={onEditTask}
+        />
+      )}
     </div>
   );
 };

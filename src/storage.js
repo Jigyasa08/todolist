@@ -1,3 +1,9 @@
+const FILTER = {
+  todo: "todo",
+  completed: "completed",
+  upcoming: "upcoming",
+};
+
 class Storage {
   key = "todoTasks";
   parse(data) {
@@ -29,13 +35,30 @@ class Storage {
     return list ? list : [];
   }
 
-  filterTasks(isCompleted, tasks) {
+  filterTasks(activeFilter, tasks) {
     if (!tasks || !tasks.length) return [];
 
     return tasks.filter((taskItem) => {
-      return taskItem.completed === isCompleted;
+      if (activeFilter === FILTER.completed) {
+        return taskItem.completed;
+      }
+      return !taskItem.completed;
     });
   }
+
+  // filterUpcomingTasks(tasks) {
+  //   if (!tasks || !tasks.length) return [];
+
+  //   const today = new Date();
+  //   const tomorrow = new Date(today);
+  //   tomorrow.setDate(today.getDate() + 1);
+
+  //   return tasks.filter((taskItem) => {
+  //     const taskDate = new Date(taskItem.dueDate);
+  //     return taskDate >= today && taskDate < tomorrow;
+  //   });
+  // }
 }
 
-export default new Storage();
+const storage = new Storage();
+export default storage;
