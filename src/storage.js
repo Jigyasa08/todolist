@@ -46,18 +46,33 @@ class Storage {
     });
   }
 
-  // filterUpcomingTasks(tasks) {
-  //   if (!tasks || !tasks.length) return [];
+  filterUpcoming(tasks) {
+    if (!tasks || !tasks.length) return [];
 
-  //   const today = new Date();
-  //   const tomorrow = new Date(today);
-  //   tomorrow.setDate(today.getDate() + 1);
+    const today = new Date();
+    const todayDate = today.toISOString().split("T")[0];
 
-  //   return tasks.filter((taskItem) => {
-  //     const taskDate = new Date(taskItem.dueDate);
-  //     return taskDate >= today && taskDate < tomorrow;
-  //   });
-  // }
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+    const tomorrowDate = tomorrow.toISOString().split("T")[0];
+
+    const todayTasks = [];
+    const tomorrowTasks = [];
+
+    tasks.forEach((task) => {
+      const taskDate = new Date(task.dueDate).toISOString().split("T")[0];
+      if (taskDate === todayDate) {
+        todayTasks.push(task);
+      } else if (taskDate === tomorrowDate) {
+        tomorrowTasks.push(task);
+      }
+    });
+
+    return {
+      today: todayTasks,
+      tomorrow: tomorrowTasks,
+    };
+  }
 }
 
 const storage = new Storage();
