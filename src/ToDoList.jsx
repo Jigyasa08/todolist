@@ -3,7 +3,7 @@ import classNames from "classnames";
 import ToDoForm from "./ToDoForm";
 import List from "./List";
 import storage from "./storage";
-// import UpcomingTasks from "./UpcomingTasks";
+import UpcomingTasks from "./UpcomingTasks";
 
 const FILTER = {
   todo: "todo",
@@ -30,10 +30,10 @@ const ToDoList = () => {
     [activeFilter, tasks]
   );
 
-  // const filteredUpcomingTasks = useMemo(
-  //   () => storage.filterUpcomingTasks(tasks),
-  //   [tasks]
-  // );
+  const filteredUpcomingTasks = useMemo(
+    () => storage.filterUpcoming(tasks),
+    [tasks]
+  );
 
   const onTaskDeleted = (index) => {
     const updatedTasks = tasks.filter((task) => task.id !== index);
@@ -101,14 +101,14 @@ const ToDoList = () => {
           Upcoming
         </h3>
       </div>
-      {/* {activeFilter === FILTER.upcoming && (
-        <List
-          tasks={filteredTasks}
-          // deleteTask={onTaskDeleted}
-          // completeTask={onTaskCompleted}
-          // editTask={onEditTask}
+      {activeFilter === FILTER.upcoming && (
+        <UpcomingTasks
+          tasks={filteredUpcomingTasks}
+          deleteTask={onTaskDeleted}
+          completeTask={onTaskCompleted}
+          editTask={onEditTask}
         />
-      )} */}
+      )}
       {(activeFilter === FILTER.todo || activeFilter === FILTER.completed) && (
         <List
           tasks={filteredTasks}
