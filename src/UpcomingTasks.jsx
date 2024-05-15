@@ -10,34 +10,38 @@ const UpcomingTasks = ({
 }) => {
   return (
     <>
-      <div>
-        <h2>Today</h2>
-        {tasks.today.map((task) => (
-          <ListItem
-            key={task.id}
-            task={task}
-            deleteTask={deleteTask}
-            onCompleteTask={completeTask}
-            onTaskChange={editTask}
-            selectedDate={selectedDate}
-            onDateChange={onDateChange}
-          />
-        ))}
-      </div>
-      <div>
-        <h2>Tomorrow</h2>
-        {tasks.tomorrow.map((task) => (
-          <ListItem
-            key={task.id}
-            task={task}
-            deleteTask={deleteTask}
-            onCompleteTask={completeTask}
-            onTaskChange={editTask}
-            selectedDate={selectedDate}
-            onDateChange={onDateChange}
-          />
-        ))}
-      </div>
+      {tasks.today.length > 0 && (
+        <div>
+          <h2>Today</h2>
+          {tasks.today.map((task) => (
+            <ListItem
+              key={task.id}
+              task={task}
+              deleteTask={deleteTask}
+              onCompleteTask={completeTask}
+              onTaskChange={editTask}
+              selectedDate={selectedDate}
+              onDateChange={onDateChange}
+            />
+          ))}
+        </div>
+      )}
+      {tasks.tomorrow.length > 0 && (
+        <div>
+          <h2>Tomorrow</h2>
+          {tasks.tomorrow.map((task) => (
+            <ListItem
+              key={task.id}
+              task={task}
+              deleteTask={deleteTask}
+              onCompleteTask={completeTask}
+              onTaskChange={editTask}
+              selectedDate={selectedDate}
+              onDateChange={onDateChange}
+            />
+          ))}
+        </div>
+      )}
     </>
   );
 };

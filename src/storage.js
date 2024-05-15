@@ -60,10 +60,10 @@ class Storage {
     const tomorrowTasks = [];
 
     tasks.forEach((task) => {
-      const taskDate = new Date(task.dueDate).toISOString().split("T")[0];
-      if (taskDate === todayDate) {
+      const taskDueDate = new Date(task.dueDate).toISOString().split("T")[0];
+      if (!task.completed && taskDueDate === todayDate) {
         todayTasks.push(task);
-      } else if (taskDate === tomorrowDate) {
+      } else if (!task.completed && taskDueDate === tomorrowDate) {
         tomorrowTasks.push(task);
       }
     });

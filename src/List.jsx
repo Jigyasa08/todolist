@@ -1,13 +1,6 @@
 import ListItem from "./ListItem";
 
-const List = ({
-  tasks,
-  deleteTask,
-  completeTask,
-  editTask,
-  onDateChange,
-  selectedDate,
-}) => {
+const List = ({ tasks, deleteTask, completeTask, editTask }) => {
   if (!tasks || !tasks.length) {
     return null;
   }
@@ -19,8 +12,6 @@ const List = ({
       deleteTask={deleteTask}
       onCompleteTask={completeTask}
       onTaskChange={editTask}
-      selectedDate={selectedDate}
-      onDateChange={onDateChange}
     />
   ));
 };

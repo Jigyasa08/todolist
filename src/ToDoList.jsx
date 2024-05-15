@@ -45,7 +45,13 @@ const ToDoList = () => {
     const updatedTasks = tasks.map((task) => {
       if (task.id === completedTask.id) {
         task.completed = !task.completed;
+        if (task.completed) {
+          task.completedDate = new Date();
+        } else {
+          task.completedDate = null;
+        }
       }
+      console.log(task);
       return { ...task };
     });
     setTasks(updatedTasks);

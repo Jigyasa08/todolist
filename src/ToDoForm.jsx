@@ -14,6 +14,7 @@ function ToDoForm({ addTasks }) {
       task: newTask,
       completed: false,
       dueDate: new Date(),
+      completedDate: null,
     };
     addTasks(task);
     setNewTask("");
