@@ -4,11 +4,16 @@ import { format } from "date-fns";
 // import storage from "./storage";
 
 const ListItem = ({ task, deleteTask, onCompleteTask, onTaskChange }) => {
-  const [editMode, setEditMode] = useState(false);
+  const [currentEditTask, setcurrentEditTaskTask] = useState(null);
+
+  const closeEditMode = () => {
+    setcurrentEditTaskTask(null);
+  };
 
   const handleEdit = (event) => {
-    task.task = event.target.value;
-    onTaskChange({ ...task });
+    const editedTask = { ...task };
+    editedTask.task = event.target.value;
+    setcurrentEditTaskTask({ ...editedTask });
   };
 
   const handleCheck = (e) => {
@@ -16,8 +21,8 @@ const ListItem = ({ task, deleteTask, onCompleteTask, onTaskChange }) => {
   };
 
   const handleSaveButtonClick = () => {
-    // onTaskChange({ ...task, task: task.task });
-    setEditMode(false);
+    onTaskChange({ ...currentEditTask });
+    closeEditMode();
   };
 
   const formattedDueDate = format(task.dueDate, "MM/dd/yyyy");
@@ -30,14 +35,14 @@ const ListItem = ({ task, deleteTask, onCompleteTask, onTaskChange }) => {
   return (
     <div className="list-item">
       {!task.completed ? (
-        editMode ? (
+        currentEditTask ? (
           <div className="flex">
             <div className="input">
               <div>
                 <div className="title">Task</div>
                 <input
                   type="text"
-                  value={task.task}
+                  value={currentEditTask.task}
                   onChange={handleEdit}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") handleSaveButtonClick();
@@ -46,15 +51,15 @@ const ListItem = ({ task, deleteTask, onCompleteTask, onTaskChange }) => {
               </div>
               <div>
                 <div className="title">Due Date</div>
-                <Datepicker task={task} onDateChange={onTaskChange} />
+                <Datepicker
+                  task={currentEditTask}
+                  onDateChange={setcurrentEditTaskTask}
+                />
               </div>
             </div>
 
             <div className="buttons">
-              <button
-                className="delete-button"
-                onClick={() => setEditMode(false)}
-              >
+              <button className="delete-button" onClick={closeEditMode}>
                 Cancel
               </button>
               <button className="edit-button" onClick={handleSaveButtonClick}>
@@ -71,7 +76,10 @@ const ListItem = ({ task, deleteTask, onCompleteTask, onTaskChange }) => {
                 className="checkbox"
                 onChange={handleCheck}
               />
-              <span className="text" onDoubleClick={() => setEditMode(true)}>
+              <span
+                className="text"
+                onDoubleClick={() => setcurrentEditTaskTask(task)}
+              >
                 {task.task}
               </span>
               {/* <p className={alertCSS ? "alert" : "date"}> */}
@@ -81,7 +89,10 @@ const ListItem = ({ task, deleteTask, onCompleteTask, onTaskChange }) => {
               </p>
             </div>
             <div className="btns">
-              <button className="edit-button" onClick={() => setEditMode(true)}>
+              <button
+                className="edit-button"
+                onClick={() => setcurrentEditTaskTask(task)}
+              >
                 Edit
               </button>
               <button
