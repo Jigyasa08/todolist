@@ -10,6 +10,7 @@ const PORT = process.env.PORT;
 
 // Middlewares
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 // Routes
 app.use("/api/tasks", taskRoutes);
