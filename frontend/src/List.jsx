@@ -7,7 +7,7 @@ const List = ({ tasks, deleteTask, completeTask, editTask }) => {
 
   return tasks.map((task) => (
     <ListItem
-      key={task.id}
+      key={task._id}
       task={task}
       deleteTask={deleteTask}
       onCompleteTask={completeTask}

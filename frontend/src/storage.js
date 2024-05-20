@@ -59,9 +59,9 @@ class Storage {
 
     return tasks.filter((taskItem) => {
       if (activeFilter === FILTER.completed) {
-        return taskItem.completed;
+        return taskItem.isCompleted;
       }
-      return !taskItem.completed;
+      return !taskItem.isCompleted;
     });
   }
 
@@ -80,9 +80,9 @@ class Storage {
 
     tasks.forEach((task) => {
       const taskDueDate = this.formatDate(new Date(task.dueDate));
-      if (!task.completed && taskDueDate === todayDate) {
+      if (!task.isCompleted && taskDueDate === todayDate) {
         todayTasks.push(task);
-      } else if (!task.completed && taskDueDate === tomorrowDate) {
+      } else if (!task.isCompleted && taskDueDate === tomorrowDate) {
         tomorrowTasks.push(task);
       }
     });

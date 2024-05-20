@@ -4,9 +4,9 @@ const Task = require("../models/task");
 const Joi = require("joi");
 
 const validationSchema = Joi.object().keys({
-  title: Joi.string().required(),
+  title: Joi.string(),
   dueDate: Joi.date().iso(),
-  isCompleted: Joi.boolean().sensitive(),
+  isCompleted: Joi.boolean(),
 });
 
 // Define routes

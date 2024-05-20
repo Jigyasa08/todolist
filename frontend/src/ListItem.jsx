@@ -12,7 +12,7 @@ const ListItem = ({ task, deleteTask, onCompleteTask, onTaskChange }) => {
 
   const handleEdit = (event) => {
     const editedTask = { ...task };
-    editedTask.task = event.target.value;
+    editedTask.title = event.target.value;
     setcurrentEditTaskTask({ ...editedTask });
   };
 
@@ -34,7 +34,7 @@ const ListItem = ({ task, deleteTask, onCompleteTask, onTaskChange }) => {
 
   return (
     <div className="list-item">
-      {!task.completed ? (
+      {!task.isCompleted ? (
         currentEditTask ? (
           <div className="flex">
             <div className="input">
@@ -42,7 +42,7 @@ const ListItem = ({ task, deleteTask, onCompleteTask, onTaskChange }) => {
                 <div className="title">Task</div>
                 <input
                   type="text"
-                  value={currentEditTask.task}
+                  value={currentEditTask.title}
                   onChange={handleEdit}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") handleSaveButtonClick();
@@ -71,7 +71,7 @@ const ListItem = ({ task, deleteTask, onCompleteTask, onTaskChange }) => {
           <div className="flex">
             <div>
               <input
-                checked={task.completed}
+                checked={task.isCompleted}
                 type="checkbox"
                 className="checkbox"
                 onChange={handleCheck}
@@ -80,7 +80,7 @@ const ListItem = ({ task, deleteTask, onCompleteTask, onTaskChange }) => {
                 className="text"
                 onDoubleClick={() => setcurrentEditTaskTask(task)}
               >
-                {task.task}
+                {task.title}
               </span>
               {/* <p className={alertCSS ? "alert" : "date"}> */}
               <p className="date">
@@ -97,7 +97,7 @@ const ListItem = ({ task, deleteTask, onCompleteTask, onTaskChange }) => {
               </button>
               <button
                 className="delete-button"
-                onClick={() => deleteTask(task.id)}
+                onClick={() => deleteTask(task._id)}
               >
                 Delete
               </button>
@@ -108,12 +108,12 @@ const ListItem = ({ task, deleteTask, onCompleteTask, onTaskChange }) => {
         <div className="flex">
           <div>
             <input
-              checked={task.completed}
+              checked={task.isCompleted}
               type="checkbox"
               className="checkbox"
               onChange={handleCheck}
             />
-            <span className="text">{task.task}</span>
+            <span className="text">{task.title}</span>
             <p className="date">
               <span>Completed Date:</span>
               <span>{formattedCompletedDate}</span>
@@ -122,7 +122,7 @@ const ListItem = ({ task, deleteTask, onCompleteTask, onTaskChange }) => {
           <div className="btns">
             <button
               className="delete-button"
-              onClick={() => deleteTask(task.id)}
+              onClick={() => deleteTask(task._id)}
             >
               Delete
             </button>

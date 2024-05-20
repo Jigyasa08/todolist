@@ -110,6 +110,7 @@ input[type="checkbox"] {
   accent-color: green;
   margin-right: 10px;
   border: 2px solid black;
+  cursor: pointer;
 }
 
 

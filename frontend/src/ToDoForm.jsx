@@ -10,11 +10,7 @@ function ToDoForm({ addTasks }) {
   function addTask() {
     if (!newTask.trim()) return;
     const task = {
-      id: Date.now(),
-      task: newTask,
-      completed: false,
-      dueDate: new Date(),
-      completedDate: null,
+      title: newTask,
     };
     addTasks(task);
     setNewTask("");

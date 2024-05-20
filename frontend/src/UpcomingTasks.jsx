@@ -15,7 +15,7 @@ const UpcomingTasks = ({
           <h2>Today</h2>
           {tasks.today.map((task) => (
             <ListItem
-              key={task.id}
+              key={task._id}
               task={task}
               deleteTask={deleteTask}
               onCompleteTask={completeTask}
@@ -31,7 +31,7 @@ const UpcomingTasks = ({
           <h2>Tomorrow</h2>
           {tasks.tomorrow.map((task) => (
             <ListItem
-              key={task.id}
+              key={task._id}
               task={task}
               deleteTask={deleteTask}
               onCompleteTask={completeTask}
